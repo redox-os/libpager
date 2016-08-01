@@ -23,10 +23,10 @@ pub fn start<R, W>(stdin: R, stdout: W, title: &str, content: &str) -> io::Resul
                 title, y + 1, y + term_size.1 as i32, line_count,
                 style::Reset, cursor::Goto(1, 2), clear::AfterCursor)?;
         for line in content.lines().skip(y as usize).take(term_size.1 as usize - 1) {
-            if let Some(end) = line.char_indices().take(term_size.0 as usize).last() {
-                write!(stdout, "{}\r{}", &line[..end.0], cursor::Down(1))?;
+            if let Some(end) = line.char_indices().nth(term_size.0 as usize) {
+                write!(stdout, "{}", &line[..end.0])?;
             } else {
-                write!(stdout, "\r{}", cursor::Down(1))?;
+                write!(stdout, "{}\r{}", line, cursor::Down(1))?;
             }
         }
         stdout.flush()?;
@@ -45,12 +45,14 @@ pub fn start<R, W>(stdin: R, stdout: W, title: &str, content: &str) -> io::Resul
     for i in stdin.keys() {
         match i? {
             Key::Down | Key::Char('j') => dy = 1,
+            Key::PageDown | Key::Char(' ') => dy = term_size.1 as i32,
             Key::Up | Key::Char('k') => dy = -1,
+            Key::PageUp | Key::Char('b') => dy = -(term_size.1 as i32),
             Key::Char('q') => break,
             _ => (),
         }
 
-        if (dy > 0 || y != 0) && dy != 0 {
+        if dy != 0 {
             y = cmp::max(0, cmp::min(y + dy, line_count as i32 - term_size.1 as i32));
             dy = 0;
 
