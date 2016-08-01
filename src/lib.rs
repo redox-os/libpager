@@ -20,7 +20,7 @@ pub fn start<R, W>(stdin: R, stdout: W, title: &str, content: &str) -> io::Resul
     let redraw = |stdout: &mut RawTerminal<W>, y: i32| -> io::Result<()> {
         write!(stdout, "{}{}{} {} {}..{}/{} {}{}{}",
                 cursor::Goto(1, 1), style::Invert, clear::CurrentLine,
-                title, y + 1, y + term_size.1 as i32, line_count,
+                title, y + 1, y + (term_size.1 as i32 - 1), line_count,
                 style::Reset, cursor::Goto(1, 2), clear::AfterCursor)?;
         for line in content.lines().skip(y as usize).take(term_size.1 as usize - 1) {
             if let Some(end) = line.char_indices().nth(term_size.0 as usize) {
@@ -53,7 +53,7 @@ pub fn start<R, W>(stdin: R, stdout: W, title: &str, content: &str) -> io::Resul
         }
 
         if dy != 0 {
-            y = cmp::max(0, cmp::min(y + dy, line_count as i32 - term_size.1 as i32));
+            y = cmp::max(0, cmp::min(y + dy, line_count as i32 - (term_size.1 as i32 - 1)));
             dy = 0;
 
             redraw(&mut stdout, y)?;
