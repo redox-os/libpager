@@ -60,7 +60,7 @@ pub fn start<R, W>(stdin: R, stdout: W, title: &str, content: &str) -> io::Resul
         }
     }
 
-    write!(stdout, "{}", cursor::Show)?;
+    write!(stdout, "{}{}{}{}", cursor::Goto(1, 1), style::Reset, clear::AfterCursor, cursor::Show)?;
 
     Ok(())
 }
