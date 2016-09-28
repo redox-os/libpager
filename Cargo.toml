@@ -4,4 +4,4 @@ version = "0.1.0"
 authors = ["ticki <ticki@users.noreply.github.com>"]
 
 [dependencies]
-termion = "1.0.3"
+termion = "1.1.1"
