@@ -46,8 +46,10 @@ pub fn start<R, W>(stdin: R, stdout: W, title: &str, content: &str) -> io::Resul
         match i? {
             Key::Down | Key::Char('j') => dy = 1,
             Key::PageDown | Key::Char(' ') => dy = (term_size.1 as i32 - 1),
+            Key::Char('d') => dy = (term_size.1 as i32 - 1)/2,
             Key::Up | Key::Char('k') => dy = -1,
             Key::PageUp | Key::Char('b') => dy = -(term_size.1 as i32 - 1),
+            Key::Char('u') => dy = -(term_size.1 as i32 - 1)/2,
             Key::Char('q') => break,
             _ => (),
         }
