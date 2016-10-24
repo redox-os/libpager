@@ -1,5 +1,3 @@
-#![feature(question_mark)]
-
 extern crate termion;
 
 use termion::{style, cursor, clear};
