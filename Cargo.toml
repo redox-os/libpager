@@ -7,4 +7,4 @@ authors = [
 ]
 
 [dependencies]
-termion = { git = "https://github.com/redox-os/termion.git" }
+termion = { git = "https://gitlab.redox-os.org/redox-os/termion.git" }
