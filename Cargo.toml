@@ -1,10 +1,18 @@
 [package]
 name = "pager"
-version = "0.1.0"
+version = "0.2.0"
+edition = "2021"
 authors = [
     "ticki <ticki@users.noreply.github.com>",
-    "Jeremy Soller <jackpot51@gmail.com>"
+    "Jeremy Soller <jackpot51@gmail.com>",
+    "Ellen Zscheile <fogti+devel@ytrizja.de>",
 ]
 
 [dependencies]
-termion = { git = "https://gitlab.redox-os.org/redox-os/termion.git" }
+
+[dependencies.ansi-control-codes]
+version = "1.0"
+features = ["parser"]
+
+[dependencies.termion]
+git = "https://gitlab.redox-os.org/redox-os/termion.git"
